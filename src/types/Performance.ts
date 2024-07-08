@@ -11,3 +11,11 @@ export interface CastItem {
   role: string;
   annualContractValue: number;
 }
+
+export interface Details {
+  [year: number]: {
+    name: string,
+    role: string,
+    annualContractValue: number,
+  };
+}

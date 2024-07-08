@@ -37,6 +37,24 @@ const performances: Performance[] = [
       },
     ],
   },
+  {
+    _id: 'perform3',
+    name: 'Rizdvo',
+    year: 2017,
+    budget: 21000,
+    cast: [
+      {
+        actorId: 'actor1',
+        role: 'Angel',
+        annualContractValue: 51000,
+      },
+      {
+        actorId: 'actor3',
+        role: 'Singer',
+        annualContractValue: 37000,
+      },
+    ],
+  },
 ];
 
 export default performances;

@@ -12,6 +12,11 @@ const actors: Actor[] = [
         role: 'Taras',
         annualContractValue: 51000,
       },
+      {
+        performanceId: 'perform3',
+        role: 'Angel',
+        annualContractValue: 51000,
+      },
     ],
   },
   {
@@ -41,6 +46,11 @@ const actors: Actor[] = [
       {
         performanceId: 'perform2',
         role: 'Ivan',
+        annualContractValue: 37000,
+      },
+      {
+        performanceId: 'perform3',
+        role: 'Singer',
         annualContractValue: 37000,
       },
     ],

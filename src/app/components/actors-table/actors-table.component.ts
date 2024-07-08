@@ -14,6 +14,7 @@ import { YearsTableComponent } from '../years-table/years-table.component';
 import actors from '../../../server/Actors';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
 import performances from '../../../server/Performances';
+import { Details } from '../../../types/Performance';
 
 @Component({
   selector: 'app-actors-table',
@@ -51,7 +52,7 @@ export class ActorsTableComponent {
 
     actorPerformances.forEach(actorPerf => {
       performances.forEach(perf => {
-        if (actorPerf.performanceId === perf._id) {
+        if (actorPerf.performanceId === perf._id && !years.includes(perf.year)) {
           years.push(perf.year)
         }
       })
@@ -59,5 +60,28 @@ export class ActorsTableComponent {
 
     return years;
   }
+
+  getInfo(actorPerformances: PerformanceItem[], fullName: string) {
+    const detailsAll: Details[] = [];
+
+    actorPerformances.forEach(actorPerf => {
+      performances.forEach(perf => {
+        if (actorPerf.performanceId === perf._id) {
+          const newDetails: Details = {
+            [perf.year]: {
+              name: fullName,
+              role: actorPerf.role,
+              annualContractValue: actorPerf.annualContractValue,
+            }
+          }
+          detailsAll.push(newDetails)
+        }
+      })
+    })
+
+    return detailsAll;
+  }
+
+
 }
 
