@@ -9,9 +9,11 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { Actor } from '../../../types/Actor';
+import { Actor, PerformanceItem } from '../../../types/Actor';
 import { YearsTableComponent } from '../years-table/years-table.component';
 import actors from '../../../server/Actors';
+import { YearExpandComponent } from '../year-expand/year-expand.component';
+import performances from '../../../server/Performances';
 
 @Component({
   selector: 'app-actors-table',
@@ -33,6 +35,7 @@ import actors from '../../../server/Actors';
     MatButtonModule,
     MatIconModule,
     YearsTableComponent,
+    YearExpandComponent
   ],
 })
 export class ActorsTableComponent {
@@ -41,5 +44,20 @@ export class ActorsTableComponent {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Actor | null | undefined;
   expandedYear: number | undefined;
+  performances = performances
+
+  getYears(actorPerformances: PerformanceItem[]) {
+    const years: number[] = [];
+
+    actorPerformances.forEach(actorPerf => {
+      performances.forEach(perf => {
+        if (actorPerf.performanceId === perf._id) {
+          years.push(perf.year)
+        }
+      })
+    })
+
+    return years;
+  }
 }
 
