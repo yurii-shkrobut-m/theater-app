@@ -10,11 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
-import { YearsTableComponent } from '../years-table/years-table.component';
 import actors from '../../../server/Actors';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
 import performances from '../../../server/Performances';
-import { Details } from '../../../types/Performance';
+import { Detail, Details } from '../../../types/Performance';
 
 @Component({
   selector: 'app-actors-table',
@@ -35,7 +34,6 @@ import { Details } from '../../../types/Performance';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    YearsTableComponent,
     YearExpandComponent
   ],
 })
@@ -61,27 +59,28 @@ export class ActorsTableComponent {
     return years;
   }
 
-  getInfo(actorPerformances: PerformanceItem[], fullName: string) {
-    const detailsAll: Details[] = [];
+  getInfo(actorPerformances: PerformanceItem[]) {
+    const detailsAll: Details = {};
 
     actorPerformances.forEach(actorPerf => {
       performances.forEach(perf => {
         if (actorPerf.performanceId === perf._id) {
-          const newDetails: Details = {
-            [perf.year]: {
-              name: fullName,
-              role: actorPerf.role,
-              annualContractValue: actorPerf.annualContractValue,
-            }
+          const newDetail: Detail = {
+            name: perf.name,
+            role: actorPerf.role,
+            annualContractValue: actorPerf.annualContractValue,
+          };
+
+          if (!detailsAll[perf.year]) {
+            detailsAll[perf.year] = [];
           }
-          detailsAll.push(newDetails)
+
+          detailsAll[perf.year].push(newDetail);
         }
-      })
-    })
+      });
+    });
 
     return detailsAll;
   }
-
-
 }
 

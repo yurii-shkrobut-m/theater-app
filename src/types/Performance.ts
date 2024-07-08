@@ -12,10 +12,12 @@ export interface CastItem {
   annualContractValue: number;
 }
 
-export interface Details {
-  [year: number]: {
-    name: string,
-    role: string,
-    annualContractValue: number,
-  };
+export interface Detail extends Omit<CastItem, 'actorId'> {
+  name: string;
 }
+
+export interface Details {
+  [year: number]: Detail[];
+}
+
+

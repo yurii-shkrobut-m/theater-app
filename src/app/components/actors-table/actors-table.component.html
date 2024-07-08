@@ -29,7 +29,10 @@
            <!-- {{'start'}} -->
 
 
-           <app-year-expand [years]="getYears(element.performances)">
+           <app-year-expand
+             [years]="getYears(element.performances)"
+             [details]="getInfo(element.performances)"
+           >
 
           </app-year-expand>
 
