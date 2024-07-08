@@ -2,10 +2,8 @@ import { CastItem } from "./Performance";
 
 export interface Actor {
   _id: string;
-  lastName: string;
-  firstName: string;
-  middleName: string;
-  rank: string;
+  name: string;
+  rank: 'Merited' | 'Honorary' | 'National';
   experience: number;
   performances: PerformanceItem[] | [];
 }

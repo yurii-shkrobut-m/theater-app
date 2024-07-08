@@ -1,7 +1,7 @@
 export interface Performance {
   _id: string;
   name: string;
-  yearOfProduction: number;
+  year: number;
   budget: number;
   cast: CastItem[];
 }
