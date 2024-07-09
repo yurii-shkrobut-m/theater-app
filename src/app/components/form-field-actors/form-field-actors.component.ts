@@ -25,57 +25,12 @@ export class FormFieldActorsComponent {
   actors = actors;
 
   actorForm = new FormGroup({
-    firstName: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-      ],
-    }),
-    lastName: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-      ],
-    }),
-    middleName: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-      ],
-    }),
-    rank: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-      ],
-    }),
-    experience: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-      ],
-    }),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    middleName: new FormControl('', Validators.required),
+    rank: new FormControl('', Validators.required),
+    experience: new FormControl('', Validators.required),
   });
-
-  get firstName() {
-    return this.actorForm.get('firstName');
-  }
-
-  get lastName() {
-    return this.actorForm.get('lastName');
-  }
-
-  get middleName() {
-    return this.actorForm.get('middleName');
-  }
-
-  get rank() {
-    return this.actorForm.get('rank');
-  }
-
-  get experience() {
-    return this.actorForm.get('experience');
-  }
 
   addActor() {
     if (this.actorForm.invalid) {
@@ -84,17 +39,16 @@ export class FormFieldActorsComponent {
 
     const newActor: Actor = {
       _id: Date.now().toString(),
-      name: `${this.firstName!.value} ${this.middleName!.value} ${this.lastName!.value}`,
-      rank: this.rank!.value as Actor["rank"],
-      experience: +this.experience!.value,
+      name: `${this.actorForm.value.firstName} ${this.actorForm.value.lastName} ${this.actorForm.value.middleName}`,
+      rank: this.actorForm.value.rank as Actor["rank"],
+      experience: +this.actorForm.value.experience!,
       performances: [],
     };
 
-    console.log(newActor)
-
     this.actors.push(newActor);
-    // this.actorForm.reset();
+    this.actorForm.reset();
 
-    console.log(actors)
+    console.log(newActor);
+    console.log(actors);
   }
 }

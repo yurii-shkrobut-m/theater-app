@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
 import { actors } from '../../../server/Actors';
 import performances from '../../../server/Performances';
@@ -41,7 +41,7 @@ import { NgFor, NgIf } from '@angular/common';
   ],
 })
 export class ActorsTableComponent implements OnInit {
-  dataSource = new MatTableDataSource<Actor>(actors); // Створюємо копію масиву actors
+  dataSource = [...actors];
   columnsToDisplay = ['name', 'rank', 'experience'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Actor | null = null;
@@ -49,7 +49,7 @@ export class ActorsTableComponent implements OnInit {
   performances = performances;
 
   ngOnInit() {
-    this.dataSource.data = actors; // Оновіть дані у MatTableDataSource
+    this.dataSource = actors;
   }
 
   getYears(actorPerformances: PerformanceItem[]) {
@@ -90,8 +90,8 @@ export class ActorsTableComponent implements OnInit {
     return detailsAll;
   }
 
-  addActor(newActor: Actor) {
-    this.dataSource.data = [...this.dataSource.data, newActor]; // Оновіть дані у MatTableDataSource
-    actors.push(newActor); // Додаємо нового актора в оригінальний масив
-  }
+  // addActor(newActor: Actor) {
+  //   this.dataSource = [...this.dataSource, newActor];
+  //   actors.push(newActor);
+  // }
 }
