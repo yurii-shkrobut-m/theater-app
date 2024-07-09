@@ -1,6 +1,6 @@
 import { Actor } from "../types/Actor";
 
-const actors: Actor[] = [
+export const actors: Actor[] = [
   {
     _id: 'actor1',
     name: 'Romanovich Teofila Fedorovna',
@@ -56,5 +56,3 @@ const actors: Actor[] = [
     ],
   },
 ];
-
-export default actors;

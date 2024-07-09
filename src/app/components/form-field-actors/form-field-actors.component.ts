@@ -3,7 +3,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import actors from '../../../server/Actors';
+import { actors } from '../../../server/Actors';
 import { Actor } from '../../../types/Actor';
 
 @Component({

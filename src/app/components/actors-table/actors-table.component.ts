@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   animate,
   state,
@@ -8,11 +8,11 @@ import {
 } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
-import actors from '../../../server/Actors';
-import { YearExpandComponent } from '../year-expand/year-expand.component';
+import { actors } from '../../../server/Actors';
 import performances from '../../../server/Performances';
+import { YearExpandComponent } from '../year-expand/year-expand.component';
 import { Detail, Details } from '../../../types/Performance';
 import { NgFor, NgIf } from '@angular/common';
 
@@ -40,13 +40,17 @@ import { NgFor, NgIf } from '@angular/common';
     NgIf,
   ],
 })
-export class ActorsTableComponent {
-  dataSource = [...actors]; // Створюємо копію масиву actors
+export class ActorsTableComponent implements OnInit {
+  dataSource = new MatTableDataSource<Actor>(actors); // Створюємо копію масиву actors
   columnsToDisplay = ['name', 'rank', 'experience'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement: Actor | null | undefined;
+  expandedElement: Actor | null = null;
   expandedYear: number | undefined;
-  performances = performances
+  performances = performances;
+
+  ngOnInit() {
+    this.dataSource.data = actors; // Оновіть дані у MatTableDataSource
+  }
 
   getYears(actorPerformances: PerformanceItem[]) {
     const years: number[] = [];
@@ -87,7 +91,7 @@ export class ActorsTableComponent {
   }
 
   addActor(newActor: Actor) {
+    this.dataSource.data = [...this.dataSource.data, newActor]; // Оновіть дані у MatTableDataSource
     actors.push(newActor); // Додаємо нового актора в оригінальний масив
-    this.dataSource = [...actors]; // Оновлюємо dataSource новою копією масиву actors
   }
 }
