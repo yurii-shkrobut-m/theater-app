@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterOutlet } from '@angular/router';
 import { ActorsTableComponent } from './components/actors-table/actors-table.component';
+import { FormFieldActorsComponent } from './components/form-field-actors/form-field-actors.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatTabsModule, ActorsTableComponent],
+  imports: [RouterOutlet, MatTabsModule, ActorsTableComponent, FormFieldActorsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

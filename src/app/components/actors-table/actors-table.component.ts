@@ -14,11 +14,12 @@ import actors from '../../../server/Actors';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
 import performances from '../../../server/Performances';
 import { Detail, Details } from '../../../types/Performance';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-actors-table',
   templateUrl: './actors-table.component.html',
-  styleUrl: './actors-table.component.scss',
+  styleUrls: ['./actors-table.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed,void', style({ height: '0px', minHeight: '0' })),
@@ -34,11 +35,13 @@ import { Detail, Details } from '../../../types/Performance';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    YearExpandComponent
+    YearExpandComponent,
+    NgFor,
+    NgIf,
   ],
 })
 export class ActorsTableComponent {
-  dataSource = actors;
+  dataSource = [...actors]; // Створюємо копію масиву actors
   columnsToDisplay = ['name', 'rank', 'experience'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Actor | null | undefined;
@@ -82,5 +85,9 @@ export class ActorsTableComponent {
 
     return detailsAll;
   }
-}
 
+  addActor(newActor: Actor) {
+    actors.push(newActor); // Додаємо нового актора в оригінальний масив
+    this.dataSource = [...actors]; // Оновлюємо dataSource новою копією масиву actors
+  }
+}
