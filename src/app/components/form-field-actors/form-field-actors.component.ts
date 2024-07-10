@@ -3,8 +3,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { actors } from '../../../server/Actors';
 import { Actor } from '../../../types/Actor';
+import { ActorsService } from '../../services/actors.service';
+
 
 @Component({
   selector: 'app-form-field-actors',
@@ -22,8 +23,6 @@ import { Actor } from '../../../types/Actor';
 })
 
 export class FormFieldActorsComponent {
-  actors = actors;
-
   actorForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -31,6 +30,10 @@ export class FormFieldActorsComponent {
     rank: new FormControl('', Validators.required),
     experience: new FormControl('', Validators.required),
   });
+
+  constructor(
+    private actorsService: ActorsService
+  ) { }
 
   addActor() {
     if (this.actorForm.invalid) {
@@ -45,10 +48,10 @@ export class FormFieldActorsComponent {
       performances: [],
     };
 
-    this.actors.push(newActor);
+    this.actorsService.createActor(newActor)
     this.actorForm.reset();
 
-    console.log(newActor);
-    console.log(actors);
+    // console.log(newActor);
+    // console.log(this.actorsService.getActors());
   }
 }

@@ -10,11 +10,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
-import { actors } from '../../../server/Actors';
 import performances from '../../../server/Performances';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
 import { Detail, Details } from '../../../types/Performance';
 import { NgFor, NgIf } from '@angular/common';
+import { ActorsService } from '../../services/actors.service';
 
 @Component({
   selector: 'app-actors-table',
@@ -41,15 +41,19 @@ import { NgFor, NgIf } from '@angular/common';
   ],
 })
 export class ActorsTableComponent implements OnInit {
-  dataSource = [...actors];
+  dataSource: Actor[] = [];
   columnsToDisplay = ['name', 'rank', 'experience'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Actor | null = null;
   expandedYear: number | undefined;
   performances = performances;
 
+  constructor(
+    private actorsService: ActorsService
+  ) { }
+
   ngOnInit() {
-    this.dataSource = actors;
+    this.dataSource = this.actorsService.getActors();
   }
 
   getYears(actorPerformances: PerformanceItem[]) {
