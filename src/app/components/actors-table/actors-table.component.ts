@@ -53,7 +53,11 @@ export class ActorsTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataSource = this.actorsService.getActors();
+    this.actorsService.getActors()
+      .subscribe((actors) => {
+        this.dataSource = actors
+      })
+
   }
 
   getYears(actorPerformances: PerformanceItem[]) {
@@ -93,9 +97,4 @@ export class ActorsTableComponent implements OnInit {
 
     return detailsAll;
   }
-
-  // addActor(newActor: Actor) {
-  //   this.dataSource = [...this.dataSource, newActor];
-  //   actors.push(newActor);
-  // }
 }

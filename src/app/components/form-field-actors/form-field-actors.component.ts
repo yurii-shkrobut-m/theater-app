@@ -49,9 +49,10 @@ export class FormFieldActorsComponent {
     };
 
     this.actorsService.createActor(newActor)
+
     this.actorForm.reset();
 
     // console.log(newActor);
-    // console.log(this.actorsService.getActors());
+    console.log(this.actorsService.getActors());
   }
 }

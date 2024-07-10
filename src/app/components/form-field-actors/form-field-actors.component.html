@@ -1,36 +1,35 @@
-<form [formGroup]="actorForm" (ngSubmit)="addActor()">
-  <mat-form-field>
-    <mat-label>First Name</mat-label>
-    <input matInput formControlName="firstName">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Last Name</mat-label>
-    <input matInput formControlName="lastName">
-
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Middle Name</mat-label>
-    <input matInput formControlName="middleName">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Rank</mat-label>
-    <input matInput formControlName="rank">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Experience</mat-label>
-    <input matInput formControlName="experience">
-  </mat-form-field>
-
-  <!-- <mat-form-field>
-    <mat-label>Select</mat-label>
-    <mat-select>
-      <mat-option value="one">First option</mat-option>
-      <mat-option value="two">Second option</mat-option>
-    </mat-select>
-  </mat-form-field> -->
+<form class="form-actors" [formGroup]="actorForm" (ngSubmit)="addActor()">
   <button type="submit">Submit</button>
+
+  <div class="form-actors__container">
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName">
+
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Middle Name</mat-label>
+      <input matInput formControlName="middleName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rank</mat-label>
+      <mat-select formControlName="rank">
+        <mat-option value="Honorary">Honorary</mat-option>
+        <mat-option value="Merited">Merited</mat-option>
+        <mat-option value="National">National</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Experience</mat-label>
+      <input matInput formControlName="experience">
+    </mat-form-field>
+  </div>
 </form>

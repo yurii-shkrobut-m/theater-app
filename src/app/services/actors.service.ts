@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actor } from '../../types/Actor';
+import { BehaviorSubject } from 'rxjs';
 
 const actorsFromServer: Actor[] = [
   {
@@ -63,14 +64,17 @@ const actorsFromServer: Actor[] = [
 })
 
 export class ActorsService {
+  private actorsFromServer = new BehaviorSubject(actorsFromServer);
 
   getActors() {
-    return actorsFromServer;
+    return this.actorsFromServer.asObservable();
   }
 
   createActor(actor: Actor) {
-    actorsFromServer.push(actor)
+    const updatedActors = [...this.actorsFromServer.value, actor];
+    this.actorsFromServer.next(updatedActors);
   }
+
 
   constructor() { }
 }
