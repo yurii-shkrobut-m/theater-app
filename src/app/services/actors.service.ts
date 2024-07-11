@@ -75,6 +75,12 @@ export class ActorsService {
     this.actorsFromServer.next(updatedActors);
   }
 
+  deleteActor(actor: Actor) {
+    const itemsWithoutDeleted =
+      [...this.actorsFromServer.value].filter(item => actor._id !== item._id);
+
+    this.actorsFromServer.next(itemsWithoutDeleted);
+  }
 
   constructor() { }
 }

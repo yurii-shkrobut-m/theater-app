@@ -45,3 +45,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+.actors-table__button {
+  display: flex;
+  gap: 10px;
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: var(--mdc-filled-text-field-error-label-text-color);
+}

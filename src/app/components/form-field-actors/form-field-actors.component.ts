@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Actor } from '../../../types/Actor';
 import { ActorsService } from '../../services/actors.service';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 
 
 @Component({
@@ -18,11 +20,19 @@ import { ActorsService } from '../../services/actors.service';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonModule,
+    NgIf,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class FormFieldActorsComponent {
+  isForm = false;
+
+  toggleIsForm() {
+    this.isForm = !this.isForm;
+  }
+
   actorForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -49,10 +59,6 @@ export class FormFieldActorsComponent {
     };
 
     this.actorsService.createActor(newActor)
-
     this.actorForm.reset();
-
-    // console.log(newActor);
-    console.log(this.actorsService.getActors());
   }
 }
