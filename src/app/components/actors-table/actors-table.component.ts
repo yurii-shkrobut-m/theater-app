@@ -10,9 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
-import performances from '../../../server/Performances';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
-import { Detail, Details } from '../../../types/Performance';
+import { Detail, Details, Performance } from '../../../types/Performance';
 import { NgFor, NgIf } from '@angular/common';
 import { ActorsService } from '../../services/actors.service';
 import { PerformancesService } from '../../services/performances.service';
@@ -43,12 +42,11 @@ import { PerformancesService } from '../../services/performances.service';
 })
 export class ActorsTableComponent implements OnInit {
   dataSource: Actor[] = [];
-  newPerformances = performances;
+  performances: Performance[] = [];
   columnsToDisplay = ['name', 'rank', 'experience'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand',];
   expandedElement: Actor | null = null;
   expandedYear: number | undefined;
-  // performances = performances;
 
   constructor(
     private actorsService: ActorsService,
@@ -63,7 +61,7 @@ export class ActorsTableComponent implements OnInit {
 
     this.performancesService.getPerformances()
       .subscribe((performancesFromServer) => {
-        this.newPerformances = performancesFromServer
+        this.performances = performancesFromServer
       })
   }
 
@@ -75,7 +73,7 @@ export class ActorsTableComponent implements OnInit {
     const years: number[] = [];
 
     actorPerformances.forEach(actorPerf => {
-      this.newPerformances.forEach(perf => {
+      this.performances.forEach(perf => {
         if (actorPerf.performanceId === perf._id && !years.includes(perf.year)) {
           years.push(perf.year)
         }
@@ -89,7 +87,7 @@ export class ActorsTableComponent implements OnInit {
     const detailsAll: Details = {};
 
     actorPerformances.forEach(actorPerf => {
-      this.newPerformances.forEach(perf => {
+      this.performances.forEach(perf => {
         if (actorPerf.performanceId === perf._id) {
           const newDetail: Detail = {
             name: perf.name,

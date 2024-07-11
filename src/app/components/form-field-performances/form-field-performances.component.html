@@ -1,41 +1,47 @@
-<form class="form-actors" [formGroup]="actorForm" (ngSubmit)="addActor()">
-  <button (click)="toggleIsForm()" mat-raised-button class="form-actors__submit-button" type="submit">
-    {{isForm ? 'Hide Form' : 'Add Actor'}}
+<form class="form-performances" [formGroup]="performanceForm" (ngSubmit)="addPerformance()">
+  <button (click)="toggleIsForm()" mat-raised-button class="form-performances__submit-button" type="submit">
+    {{isForm ? 'Hide Form' : 'Add Performance'}}
   </button>
 
-  <button *ngIf="isForm" mat-flat-button class="form-actors__submit-button" type="submit">
-    Submit
+  <button *ngIf="isForm" mat-flat-button class="form-performances__submit-button" type="submit">
+    Add
   </button>
 
-  <div *ngIf="isForm" class="form-actors__container">
+  <div *ngIf="isForm" class="form-performances__container">
     <mat-form-field>
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName">
+      <mat-label>Year</mat-label>
+      <input matInput formControlName="year">
 
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Middle Name</mat-label>
-      <input matInput formControlName="middleName">
+      <mat-label>Budget</mat-label>
+      <input matInput formControlName="budget">
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Rank</mat-label>
-      <mat-select formControlName="rank">
-        <mat-option value="Honorary">Honorary</mat-option>
-        <mat-option value="Merited">Merited</mat-option>
-        <mat-option value="National">National</mat-option>
+      <mat-label>Role</mat-label>
+      <input matInput formControlName="role">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Contract Value</mat-label>
+      <input matInput formControlName="contractValue">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Toppings</mat-label>
+      <mat-select formControlName="toppings" multiple>
+        <mat-option *ngFor="let actor of actors" [value]="actor.name">
+          {{actor.name}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Experience</mat-label>
-      <input matInput formControlName="experience">
-    </mat-form-field>
   </div>
 </form>
