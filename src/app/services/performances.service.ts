@@ -70,5 +70,12 @@ export class PerformancesService {
     return this.performancesFromServer.asObservable();
   }
 
+  deletePerformance(performance: Performance) {
+    const itemsWithoutDeleted =
+      [...this.performancesFromServer.value].filter(item => performance._id !== item._id);
+
+    this.performancesFromServer.next(itemsWithoutDeleted);
+  }
+
   constructor() { }
 }

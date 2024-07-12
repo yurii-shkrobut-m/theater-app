@@ -9,9 +9,9 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { Actor, PerformanceItem } from '../../../types/Actor';
+import { Actor, Detail, Details, PerformanceItem } from '../../../types/Actor';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
-import { Detail, Details, Performance } from '../../../types/Performance';
+import { Performance } from '../../../types/Performance';
 import { NgFor, NgIf } from '@angular/common';
 import { ActorsService } from '../../services/actors.service';
 import { PerformancesService } from '../../services/performances.service';

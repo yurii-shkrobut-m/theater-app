@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Details } from '../../../types/Performance';
 import { NgFor } from '@angular/common';
+import { Details } from '../../../types/Actor';
+import { CastItem, PerformanceDetail } from '../../../types/Performance';
 
 @Component({
   selector: 'app-performance-details',
@@ -11,9 +12,9 @@ import { NgFor } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PerformanceDetailsComponent {
-  @Input() details!: Details;
+  @Input() details!: PerformanceDetail[];
 
   constructor() {
-    console.log(this.details)
+    // console.log(this.details)
   }
 }

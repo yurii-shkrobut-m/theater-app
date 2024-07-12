@@ -12,14 +12,11 @@ export interface CastItem {
   annualContractValue: number;
 }
 
-export interface Detail {
+export interface PerformanceDetail {
   name: string;
   role: string;
   annualContractValue: number;
 }
 
-export interface Details {
-  [year: number]: Detail[];
-}
 
 

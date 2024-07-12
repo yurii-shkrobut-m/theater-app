@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
-import { Detail, Details, Performance } from '../../../types/Performance';
+import { CastItem, Performance, PerformanceDetail } from '../../../types/Performance';
 import { NgFor, NgIf } from '@angular/common';
 import { ActorsService } from '../../services/actors.service';
 import { PerformancesService } from '../../services/performances.service';
@@ -43,9 +43,9 @@ import { PerformanceDetailsComponent } from '../performance-details/performance-
   ],
 })
 export class PerformanceTableComponent implements OnInit {
-  dataSource: Actor[] = [];
-  performances: Performance[] = [];
-  columnsToDisplay = ['name', 'rank', 'experience'];
+  dataSource: Performance[] = [];
+  actors: Actor[] = [];
+  columnsToDisplay = ['name', 'budget', 'year'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand',];
   expandedElement: Actor | null = null;
   expandedYear: number | undefined;
@@ -58,44 +58,36 @@ export class PerformanceTableComponent implements OnInit {
   ngOnInit() {
     this.actorsService.getActors()
       .subscribe((actors) => {
-        this.dataSource = actors
+        this.actors = actors
       })
 
     this.performancesService.getPerformances()
       .subscribe((performancesFromServer) => {
-        this.performances = performancesFromServer
+        this.dataSource = performancesFromServer
       })
   }
 
-  removeActor(actor: Actor) {
-    this.actorsService.deleteActor(actor)
+  removePerformance(performance: Performance) {
+    this.performancesService.deletePerformance(performance)
   }
 
+  getInfo(performanceCast: CastItem[]) {
+    const detailsAll: PerformanceDetail[] = [];
 
+    performanceCast.forEach(perfActor => {
+      this.actors.forEach(actor => {
+        if (perfActor.actorId === actor._id) {
+          const newDetail: PerformanceDetail = {
+            name: actor.name,
+            role: perfActor.role,
+            annualContractValue: perfActor.annualContractValue,
+          };
 
-  // getInfo(actorPerformances: PerformanceItem[]) {
-  //   const detailsAll: PerformanceItem[] = [];
+          detailsAll.push(newDetail);
+        }
+      });
+    });
 
-  //   actorPerformances.forEach(actorPerf => {
-  //     this.performances.forEach(perf => {
-  //       if (actorPerf.performanceId === perf._id) {
-  //         const newDetail: PerformanceItem = {
-  //           name: perf.name,
-  //           role: actorPerf.role,
-  //           annualContractValue: actorPerf.annualContractValue,
-  //         };
-
-  //         if (!detailsAll.length) {
-  //           return;
-  //         }
-
-  //         detailsAll.push(newDetail);
-  //       }
-  //     });
-  //   });
-
-  //   console.log(detailsAll)
-
-  //   return detailsAll;
-  // }
+    return detailsAll;
+  }
 }

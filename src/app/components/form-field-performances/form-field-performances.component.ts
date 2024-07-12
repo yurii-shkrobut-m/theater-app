@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { PerformancesService } from '../../services/performances.service';
 import { ActorsService } from '../../services/actors.service';
 import { Actor } from '../../../types/Actor';
+import { Performance } from '../../../types/Performance';
 
 @Component({
   selector: 'app-form-field-performances',
@@ -37,7 +38,7 @@ export class FormFieldPerformancesComponent implements OnInit {
     budget: new FormControl('', Validators.required),
     role: new FormControl('', Validators.required),
     contractValue: new FormControl('', Validators.required),
-    toppings: new FormControl('', Validators.required),
+    cast: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -57,20 +58,30 @@ export class FormFieldPerformancesComponent implements OnInit {
   }
 
   addPerformance() {
-    console.log(this.performanceForm.value)
-    console.log(this.performanceForm.value.toppings)
-    // console.log(this.performanceForm)
-    // if (this.actorForm.invalid) {
-    //   return;
-    // }
+    if (this.performanceForm.invalid) {
+      return;
+    }
 
-    // const newActor: Actor = {
-    //   _id: Date.now().toString(),
-    //   name: `${this.actorForm.value.firstName} ${this.actorForm.value.lastName} ${this.actorForm.value.middleName}`,
-    //   rank: this.actorForm.value.rank as Actor["rank"],
-    //   experience: +this.actorForm.value.experience!,
-    //   performances: [],
-    // };
+    const newPerformance: Performance = {
+      _id: Date.now().toString(),
+      name: this.performanceForm.value.name!,
+      year: +this.performanceForm.value.year!,
+      budget: +this.performanceForm.value.budget!,
+      cast: [],
+    };
+
+    const f = this.performanceForm.value.cast!;
+
+    newPerformance.cast.push({
+      actorId: f,
+      role: this.performanceForm.value.role!,
+      annualContractValue: +this.performanceForm.value.contractValue!,
+    })
+
+
+    console.log(newPerformance)
+
+
 
     // this.actorsService.createActor(newActor)
     // this.actorForm.reset();

@@ -13,3 +13,14 @@ export interface PerformanceItem {
   role: string;
   annualContractValue: number;
 }
+
+export interface Detail {
+  name: string;
+  role: string;
+  annualContractValue: number;
+}
+
+export interface Details {
+  [year: number]: Detail[];
+}
+

@@ -36,8 +36,8 @@
 
     <mat-form-field>
       <mat-label>Actors</mat-label>
-      <mat-select formControlName="toppings" multiple>
-        <mat-option *ngFor="let actor of actors" [value]="actor.name">
+      <mat-select formControlName="cast" multiple>
+        <mat-option *ngFor="let actor of actors" [value]="actor._id">
           {{actor.name}}
         </mat-option>
       </mat-select>
