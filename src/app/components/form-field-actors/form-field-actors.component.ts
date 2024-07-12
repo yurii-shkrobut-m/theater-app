@@ -45,7 +45,7 @@ export class FormFieldActorsComponent {
     private actorsService: ActorsService
   ) { }
 
-  addActor() {
+  createActor() {
     if (this.actorForm.invalid) {
       return;
     }
@@ -58,7 +58,7 @@ export class FormFieldActorsComponent {
       performances: [],
     };
 
-    this.actorsService.createActor(newActor)
+    this.actorsService.addActor(newActor)
     this.actorForm.reset();
   }
 }

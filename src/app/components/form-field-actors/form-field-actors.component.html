@@ -1,9 +1,10 @@
-<form class="form-actors" [formGroup]="actorForm" (ngSubmit)="addActor()">
+<form class="form-actors" [formGroup]="actorForm" (ngSubmit)="createActor()">
   <button (click)="toggleIsForm()" mat-raised-button class="form-actors__submit-button" type="submit">
     {{isForm ? 'Hide Form' : 'Add Actor'}}
   </button>
 
-  <button *ngIf="isForm" mat-flat-button class="form-actors__submit-button" type="submit">
+  <button *ngIf="isForm" mat-flat-button class="form-actors__submit-button" [disabled]="actorForm.invalid"
+    type="submit">
     Add
   </button>
 
@@ -35,7 +36,7 @@
 
     <mat-form-field>
       <mat-label>Experience</mat-label>
-      <input matInput formControlName="experience">
+      <input matInput formControlName="experience" type="number">
     </mat-form-field>
   </div>
 </form>

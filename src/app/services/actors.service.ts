@@ -70,7 +70,7 @@ export class ActorsService {
     return this.actorsFromServer.asObservable();
   }
 
-  createActor(actor: Actor) {
+  addActor(actor: Actor) {
     const updatedActors = [...this.actorsFromServer.value, actor];
     this.actorsFromServer.next(updatedActors);
   }

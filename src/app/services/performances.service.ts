@@ -70,6 +70,11 @@ export class PerformancesService {
     return this.performancesFromServer.asObservable();
   }
 
+  addPerformance(performance: Performance) {
+    const updatedPerformances = [...this.performancesFromServer.value, performance];
+    this.performancesFromServer.next(updatedPerformances);
+  }
+
   deletePerformance(performance: Performance) {
     const itemsWithoutDeleted =
       [...this.performancesFromServer.value].filter(item => performance._id !== item._id);

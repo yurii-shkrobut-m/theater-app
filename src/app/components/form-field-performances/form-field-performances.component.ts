@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import { PerformancesService } from '../../services/performances.service';
 import { ActorsService } from '../../services/actors.service';
 import { Actor } from '../../../types/Actor';
 import { Performance } from '../../../types/Performance';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-form-field-performances',
@@ -19,6 +20,7 @@ import { Performance } from '../../../types/Performance';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -29,61 +31,54 @@ import { Performance } from '../../../types/Performance';
 })
 
 export class FormFieldPerformancesComponent implements OnInit {
-  isForm = false;
+  performanceForm: FormGroup;
   actors: Actor[] = [];
 
-  performanceForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    year: new FormControl('', Validators.required),
-    budget: new FormControl('', Validators.required),
-    role: new FormControl('', Validators.required),
-    contractValue: new FormControl('', Validators.required),
-    cast: new FormControl('', Validators.required),
-  });
-
   constructor(
+    private formBuilder: FormBuilder,
     private performancesService: PerformancesService,
-    private actorsService: ActorsService,
-  ) { }
+    private actorsService: ActorsService
+  ) {
+    this.performanceForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      year: ['', Validators.required],
+      budget: ['', Validators.required],
+      cast: this.formBuilder.array([])
+    });
+  }
 
   ngOnInit() {
-    this.actorsService.getActors()
-      .subscribe((actorsFromServer) => {
-        this.actors = actorsFromServer;
-      })
+    this.actorsService.getActors().subscribe((actors) => {
+      this.actors = actors;
+    });
   }
 
-  toggleIsForm() {
-    this.isForm = !this.isForm;
+  get cast(): FormArray {
+    return this.performanceForm.get('cast') as FormArray;
   }
 
-  addPerformance() {
-    if (this.performanceForm.invalid) {
-      return;
+  addActor() {
+    const actorGroup = this.formBuilder.group({
+      actorId: ['', Validators.required],
+      role: ['', Validators.required],
+      annualContractValue: ['', Validators.required]
+    });
+    this.cast.push(actorGroup);
+  }
+
+  removeActor(index: number) {
+    this.cast.removeAt(index);
+  }
+
+  createPerformance() {
+    console.log(this.performanceForm.value);
+
+    if (this.performanceForm.valid) {
+      this.performancesService.addPerformance(this.performanceForm.value);
+      this.performanceForm.reset();
+      this.cast.clear();
     }
 
-    const newPerformance: Performance = {
-      _id: Date.now().toString(),
-      name: this.performanceForm.value.name!,
-      year: +this.performanceForm.value.year!,
-      budget: +this.performanceForm.value.budget!,
-      cast: [],
-    };
 
-    const f = this.performanceForm.value.cast!;
-
-    newPerformance.cast.push({
-      actorId: f,
-      role: this.performanceForm.value.role!,
-      annualContractValue: +this.performanceForm.value.contractValue!,
-    })
-
-
-    console.log(newPerformance)
-
-
-
-    // this.actorsService.createActor(newActor)
-    // this.actorForm.reset();
   }
 }
