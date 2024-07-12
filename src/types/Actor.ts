@@ -8,6 +8,8 @@ export interface Actor {
   performances: PerformanceItem[] | [];
 }
 
-export interface PerformanceItem extends Omit<CastItem, 'actorId'> {
+export interface PerformanceItem {
   performanceId: string;
+  role: string;
+  annualContractValue: number;
 }

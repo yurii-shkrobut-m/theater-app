@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ActorsTableComponent } from './components/actors-table/actors-table.component';
 import { FormFieldActorsComponent } from './components/form-field-actors/form-field-actors.component';
 import { FormFieldPerformancesComponent } from './components/form-field-performances/form-field-performances.component';
+import { PerformanceTableComponent } from './components/performance-table/performance-table.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { FormFieldPerformancesComponent } from './components/form-field-performa
     MatTabsModule,
     ActorsTableComponent,
     FormFieldActorsComponent,
+    PerformanceTableComponent,
     FormFieldPerformancesComponent
   ],
   templateUrl: './app.component.html',
