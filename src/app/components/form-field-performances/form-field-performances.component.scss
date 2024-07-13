@@ -16,6 +16,13 @@
     justify-content: stretch;
   }
 
+  &__cast {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1%;
+    justify-content: stretch;
+  }
+
   &__submit-button {
     margin: 0 10px 20px 0;
   }
