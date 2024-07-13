@@ -82,5 +82,17 @@ export class ActorsService {
     this.actorsFromServer.next(itemsWithoutDeleted);
   }
 
+  updateActorsPerformance(performance: Performance) {
+    const actorsWithUpdatedPerformance = [...this.actorsFromServer.value];
+    console.log(performance);
+
+    actorsWithUpdatedPerformance.map(actors => {
+      console.log(actors)
+
+
+
+    })
+  }
+
   constructor() { }
 }

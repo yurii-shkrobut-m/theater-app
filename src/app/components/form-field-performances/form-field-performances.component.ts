@@ -40,6 +40,7 @@ export class FormFieldPerformancesComponent implements OnInit {
     private actorsService: ActorsService
   ) {
     this.performanceForm = this.formBuilder.group({
+      _id: Date.now().toString(),
       name: ['', Validators.required],
       year: ['', Validators.required],
       budget: ['', Validators.required],
@@ -71,14 +72,11 @@ export class FormFieldPerformancesComponent implements OnInit {
   }
 
   createPerformance() {
-    console.log(this.performanceForm.value);
-
-    if (this.performanceForm.valid) {
+    if (this.performanceForm.valid && !!this.cast.length) {
       this.performancesService.addPerformance(this.performanceForm.value);
+      this.actorsService.updateActorsPerformance(this.performanceForm.value)
       this.performanceForm.reset();
       this.cast.clear();
     }
-
-
   }
 }

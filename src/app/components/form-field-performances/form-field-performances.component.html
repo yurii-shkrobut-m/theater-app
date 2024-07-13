@@ -1,7 +1,8 @@
 <form [formGroup]="performanceForm" (ngSubmit)="createPerformance()">
   <div>
     <button mat-raised-button type="button" (click)="addActor()">Add Actor</button>
-    <button mat-raised-button type="submit" [disabled]="performanceForm.invalid">Add Performance</button>
+    <button mat-raised-button type="submit" [disabled]="performanceForm.invalid">Add
+      Performance</button>
   </div>
 
   <mat-form-field>
