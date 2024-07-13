@@ -5,7 +5,7 @@ export interface Actor {
   name: string;
   rank: 'Merited' | 'Honorary' | 'National';
   experience: number;
-  performances: PerformanceItem[] | [];
+  performances: PerformanceItem[];
 }
 
 export interface PerformanceItem {

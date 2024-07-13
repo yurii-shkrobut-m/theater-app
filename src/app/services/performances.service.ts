@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Performance } from '../../types/Performance';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const performancesFromServer: Performance[] = [
   {
@@ -64,16 +64,37 @@ const performancesFromServer: Performance[] = [
 })
 
 export class PerformancesService {
-  private performancesFromServer = new BehaviorSubject(performancesFromServer);
+  private performancesFromServer = new BehaviorSubject<Performance[]>(performancesFromServer);
 
-  getPerformances() {
+  // private generateId(): string {
+  //   return Date.now().toString();
+  // }
+
+  getPerformances(): Observable<Performance[]> {
     return this.performancesFromServer.asObservable();
   }
 
-  addPerformance(performance: Performance) {
+  addPerformance(performance: Performance): Observable<Performance> {
     const updatedPerformances = [...this.performancesFromServer.value, performance];
     this.performancesFromServer.next(updatedPerformances);
+
+    // const performances = this.performancesFromServer.getValue();
+    // const newPerformance = { ...performance, _id: this.generateId() };
+
+    // performances.push(newPerformance);
+    // this.performancesFromServer.next(performances);
+
+    return new Observable(observer => {
+      observer.next(performance);
+      observer.complete();
+    });
   }
+
+
+  // addPerformance(performance: Performance) {
+  //   const updatedPerformances = [...this.performancesFromServer.value, performance];
+  //   this.performancesFromServer.next(updatedPerformances);
+  // }
 
   deletePerformance(performance: Performance) {
     const itemsWithoutDeleted =

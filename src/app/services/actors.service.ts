@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actor } from '../../types/Actor';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const actorsFromServer: Actor[] = [
   {
@@ -64,9 +64,9 @@ const actorsFromServer: Actor[] = [
 })
 
 export class ActorsService {
-  private actorsFromServer = new BehaviorSubject(actorsFromServer);
+  private actorsFromServer = new BehaviorSubject<Actor[]>(actorsFromServer);
 
-  getActors() {
+  getActors(): Observable<Actor[]> {
     return this.actorsFromServer.asObservable();
   }
 
@@ -82,17 +82,36 @@ export class ActorsService {
     this.actorsFromServer.next(itemsWithoutDeleted);
   }
 
-  updateActorsPerformance(performance: Performance) {
-    const actorsWithUpdatedPerformance = [...this.actorsFromServer.value];
-    console.log(performance);
+  updateActorPerformances(actorId: string, performance: any): void {
+    const actors = this.actorsFromServer.getValue();
+    const actorIndex = actors.findIndex(actor => actor._id === actorId);
 
-    actorsWithUpdatedPerformance.map(actors => {
-      console.log(actors)
-
-
-
-    })
+    if (actorIndex !== -1) {
+      actors[actorIndex].performances.push(performance);
+      this.actorsFromServer.next(actors);
+    }
   }
+
+  addPerformanceToActors(performance: any, cast: any[]): void {
+    cast.forEach(castMember => {
+      this.updateActorPerformances(castMember.actorId, {
+        performanceId: performance._id,
+        role: castMember.role,
+        annualContractValue: castMember.annualContractValue
+      });
+    });
+  }
+
+
+
+  // updateActorsPerformance(performance: Performance) {
+  //   const actorsWithUpdatedPerformance = [...this.actorsFromServer.value];
+  //   console.log(performance);
+
+  //   actorsWithUpdatedPerformance.map(actors => {
+  //     console.log(actors)
+  //   })
+  // }
 
   constructor() { }
 }

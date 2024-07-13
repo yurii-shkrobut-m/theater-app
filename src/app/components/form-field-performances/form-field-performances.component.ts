@@ -72,9 +72,16 @@ export class FormFieldPerformancesComponent implements OnInit {
   }
 
   createPerformance() {
-    if (this.performanceForm.valid && !!this.cast.length) {
-      this.performancesService.addPerformance(this.performanceForm.value);
-      this.actorsService.updateActorsPerformance(this.performanceForm.value)
+    console.log(this.performanceForm.valid);
+
+    if (this.performanceForm.valid) {
+      const newPerformance = this.performanceForm.value;
+
+
+      this.performancesService.addPerformance(newPerformance).subscribe((performance) => {
+        this.actorsService.addPerformanceToActors(performance, newPerformance.cast);
+      });
+
       this.performanceForm.reset();
       this.cast.clear();
     }
