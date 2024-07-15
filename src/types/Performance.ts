@@ -1,5 +1,7 @@
+import {Actor} from "./Actor";
+
 export interface Performance {
-  _id: string;
+  _id?: string;
   name: string;
   year: number;
   budget: number;
@@ -7,7 +9,7 @@ export interface Performance {
 }
 
 export interface CastItem {
-  actorId: string;
+  actor: Actor;
   role: string;
   annualContractValue: number;
 }

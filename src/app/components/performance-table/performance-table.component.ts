@@ -56,12 +56,12 @@ export class PerformanceTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.actorsService.getActors()
+    this.actorsService.actors$
       .subscribe((actors) => {
         this.actors = actors
       })
 
-    this.performancesService.getPerformances()
+    this.performancesService.performances$
       .subscribe((performancesFromServer) => {
         this.dataSource = performancesFromServer
       })
@@ -69,23 +69,20 @@ export class PerformanceTableComponent implements OnInit {
 
   removePerformance(performance: Performance) {
     this.performancesService.deletePerformance(performance)
+      .subscribe()
   }
 
   getInfo(performanceCast: CastItem[]) {
     const detailsAll: PerformanceDetail[] = [];
 
     performanceCast.forEach(perfActor => {
-      this.actors.forEach(actor => {
-        if (perfActor.actorId === actor._id) {
-          const newDetail: PerformanceDetail = {
-            name: actor.name,
-            role: perfActor.role,
-            annualContractValue: perfActor.annualContractValue,
-          };
+      const newDetail: PerformanceDetail = {
+        name: perfActor.actor.name,
+        role: perfActor.role,
+        annualContractValue: perfActor.annualContractValue,
+      };
 
-          detailsAll.push(newDetail);
-        }
-      });
+      detailsAll.push(newDetail);
     });
 
     return detailsAll;

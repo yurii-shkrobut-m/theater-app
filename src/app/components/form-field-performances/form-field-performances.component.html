@@ -22,32 +22,31 @@
       <mat-label>Budget</mat-label>
       <input matInput formControlName="budget" type="number">
     </mat-form-field>
+  </div>
 
-    <div formArrayName="cast">
-      <div style="display: flex; gap: 2%;" *ngFor="let actorGroup of cast.controls; let i = index" [formGroupName]="i">
-        <mat-form-field>
-          <mat-label>Actor</mat-label>
-          <mat-select formControlName="actorId">
-            <mat-option *ngFor="let actor of actors" [value]="actor._id">{{ actor.name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+  <div formArrayName="cast">
+    <div style="display: flex; gap: 2%;" *ngFor="let actorGroup of cast.controls; let i = index" [formGroupName]="i">
+      <mat-form-field>
+        <mat-label>Actor</mat-label>
+        <mat-select formControlName="actor">
+          <mat-option *ngFor="let actor of actors" [value]="actor._id">{{ actor.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Role</mat-label>
-          <input matInput formControlName="role">
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <input matInput formControlName="role">
+      </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Annual Contract Value</mat-label>
-          <input matInput formControlName="annualContractValue" type="number">
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>Annual Contract Value</mat-label>
+        <input matInput formControlName="annualContractValue" type="number">
+      </mat-form-field>
 
-        <button mat-icon-button color="warn" (click)="removeActor(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+      <button mat-icon-button color="warn" (click)="removeActor(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
-
   </div>
 
 

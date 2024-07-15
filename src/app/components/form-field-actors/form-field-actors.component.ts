@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -51,14 +51,15 @@ export class FormFieldActorsComponent {
     }
 
     const newActor: Actor = {
-      _id: Date.now().toString(),
       name: `${this.actorForm.value.firstName} ${this.actorForm.value.lastName} ${this.actorForm.value.middleName}`,
       rank: this.actorForm.value.rank as Actor["rank"],
       experience: +this.actorForm.value.experience!,
-      performances: [],
+      // performances: [],
     };
 
     this.actorsService.addActor(newActor)
+      .subscribe()
+
     this.actorForm.reset();
   }
 }

@@ -11,10 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Actor, Detail, Details, PerformanceItem } from '../../../types/Actor';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
-import { Performance } from '../../../types/Performance';
 import { NgFor, NgIf } from '@angular/common';
 import { ActorsService } from '../../services/actors.service';
-import { PerformancesService } from '../../services/performances.service';
 
 @Component({
   selector: 'app-actors-table',
@@ -42,66 +40,50 @@ import { PerformancesService } from '../../services/performances.service';
 })
 export class ActorsTableComponent implements OnInit {
   dataSource: Actor[] = [];
-  performances: Performance[] = [];
   columnsToDisplay = ['name', 'rank', 'experience'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand',];
   expandedElement: Actor | null = null;
-  expandedYear: number | undefined;
 
   constructor(
     private actorsService: ActorsService,
-    private performancesService: PerformancesService
   ) { }
 
   ngOnInit() {
-    this.actorsService.getActors()
-      .subscribe((actors) => {
-        this.dataSource = actors
-      })
-
-    this.performancesService.getPerformances()
-      .subscribe((performancesFromServer) => {
-        this.performances = performancesFromServer
-      })
+    this.actorsService.actors$.subscribe((actors) => {
+      this.dataSource = actors;
+    });
   }
 
   removeActor(actor: Actor) {
     this.actorsService.deleteActor(actor)
+      .subscribe();
   }
 
   getYears(actorPerformances: PerformanceItem[]) {
-    const years: number[] = [];
+    const years: Set<number> = new Set();
 
     actorPerformances.forEach(actorPerf => {
-      this.performances.forEach(perf => {
-        if (actorPerf.performanceId === perf._id && !years.includes(perf.year)) {
-          years.push(perf.year)
-        }
-      })
+      years.add(actorPerf.performance.year)
     })
 
-    return years;
+    return [...years];
   }
 
   getInfo(actorPerformances: PerformanceItem[]) {
     const detailsAll: Details = {};
-
+    //
     actorPerformances.forEach(actorPerf => {
-      this.performances.forEach(perf => {
-        if (actorPerf.performanceId === perf._id) {
-          const newDetail: Detail = {
-            name: perf.name,
-            role: actorPerf.role,
-            annualContractValue: actorPerf.annualContractValue,
-          };
+      const newDetail: Detail = {
+        name: actorPerf.performance.name,
+        role: actorPerf.role,
+        annualContractValue: actorPerf.annualContractValue,
+      };
 
-          if (!detailsAll[perf.year]) {
-            detailsAll[perf.year] = [];
-          }
+      if (!detailsAll[actorPerf.performance.year]) {
+        detailsAll[actorPerf.performance.year] = [];
+      }
 
-          detailsAll[perf.year].push(newDetail);
-        }
-      });
+      detailsAll[actorPerf.performance.year].push(newDetail);
     });
 
     return detailsAll;

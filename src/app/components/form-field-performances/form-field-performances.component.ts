@@ -40,7 +40,6 @@ export class FormFieldPerformancesComponent implements OnInit {
     private actorsService: ActorsService
   ) {
     this.performanceForm = this.formBuilder.group({
-      _id: Date.now().toString(),
       name: ['', Validators.required],
       year: ['', Validators.required],
       budget: ['', Validators.required],
@@ -49,9 +48,10 @@ export class FormFieldPerformancesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.actorsService.getActors().subscribe((actors) => {
-      this.actors = actors;
-    });
+    this.actorsService.actors$
+      .subscribe((actors) => {
+        this.actors = actors
+      })
   }
 
   get cast(): FormArray {
@@ -60,7 +60,7 @@ export class FormFieldPerformancesComponent implements OnInit {
 
   addActor() {
     const actorGroup = this.formBuilder.group({
-      actorId: ['', Validators.required],
+      actor: ['', Validators.required],
       role: ['', Validators.required],
       annualContractValue: ['', Validators.required]
     });
@@ -72,11 +72,8 @@ export class FormFieldPerformancesComponent implements OnInit {
   }
 
   createPerformance() {
-    console.log(this.performanceForm.valid);
-
     if (this.performanceForm.valid) {
       const newPerformance = this.performanceForm.value;
-
 
       this.performancesService.addPerformance(newPerformance).subscribe((performance) => {
         this.actorsService.addPerformanceToActors(performance, newPerformance.cast);

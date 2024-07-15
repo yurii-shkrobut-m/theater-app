@@ -1,15 +1,14 @@
-import { CastItem } from "./Performance";
-
+import {Performance} from "./Performance";
 export interface Actor {
-  _id: string;
+  _id?: string;
   name: string;
   rank: 'Merited' | 'Honorary' | 'National';
   experience: number;
-  performances: PerformanceItem[];
+  employments?: PerformanceItem[];
 }
 
 export interface PerformanceItem {
-  performanceId: string;
+  performance: Performance;
   role: string;
   annualContractValue: number;
 }

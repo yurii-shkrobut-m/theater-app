@@ -1,107 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Performance } from '../../types/Performance';
-import { BehaviorSubject, Observable } from 'rxjs';
-
-const performancesFromServer: Performance[] = [
-  {
-    _id: 'perform1',
-    name: 'Zaporozetz za Dunaem',
-    year: 2020,
-    budget: 520000,
-    cast: [
-      {
-        actorId: 'actor2',
-        role: 'Kozak',
-        annualContractValue: 65000,
-      },
-      {
-        actorId: 'actor3',
-        role: 'Fishman',
-        annualContractValue: 48000,
-      },
-    ],
-  },
-  {
-    _id: 'perform2',
-    name: 'Kaidasheva simja',
-    year: 2017,
-    budget: 710000,
-    cast: [
-      {
-        actorId: 'actor1',
-        role: 'Taras',
-        annualContractValue: 51000,
-      },
-      {
-        actorId: 'actor3',
-        role: 'Ivan',
-        annualContractValue: 37000,
-      },
-    ],
-  },
-  {
-    _id: 'perform3',
-    name: 'Rizdvo',
-    year: 2017,
-    budget: 21000,
-    cast: [
-      {
-        actorId: 'actor1',
-        role: 'Angel',
-        annualContractValue: 51000,
-      },
-      {
-        actorId: 'actor3',
-        role: 'Singer',
-        annualContractValue: 37000,
-      },
-    ],
-  },
-];
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PerformancesService {
-  private performancesFromServer = new BehaviorSubject<Performance[]>(performancesFromServer);
+  private performancesFromServer = new BehaviorSubject<Performance[]>([]);
+  performances$ = this.performancesFromServer.asObservable()
 
-  // private generateId(): string {
-  //   return Date.now().toString();
-  // }
+  constructor(private http: HttpClient) {
+    this.loadInitialData();
+  }
+
+  private loadInitialData() {
+    this.getPerformances().subscribe();
+  }
 
   getPerformances(): Observable<Performance[]> {
-    return this.performancesFromServer.asObservable();
+    return this.http.get<Performance[]>("http://localhost:3000/api/performances")
+      .pipe(
+        tap(performances => this.performancesFromServer.next(performances))
+      );
   }
 
   addPerformance(performance: Performance): Observable<Performance> {
-    const updatedPerformances = [...this.performancesFromServer.value, performance];
-    this.performancesFromServer.next(updatedPerformances);
-
-    // const performances = this.performancesFromServer.getValue();
-    // const newPerformance = { ...performance, _id: this.generateId() };
-
-    // performances.push(newPerformance);
-    // this.performancesFromServer.next(performances);
-
-    return new Observable(observer => {
-      observer.next(performance);
-      observer.complete();
-    });
+    return this.http.post<Performance>("http://localhost:3000/api/performances", performance)
+      .pipe(
+        tap(() => this.getPerformances().subscribe())
+      );
   }
-
-
-  // addPerformance(performance: Performance) {
-  //   const updatedPerformances = [...this.performancesFromServer.value, performance];
-  //   this.performancesFromServer.next(updatedPerformances);
-  // }
 
   deletePerformance(performance: Performance) {
-    const itemsWithoutDeleted =
-      [...this.performancesFromServer.value].filter(item => performance._id !== item._id);
-
-    this.performancesFromServer.next(itemsWithoutDeleted);
+    return this.http.delete<Performance>(`http://localhost:3000/api/performances/${performance._id}`)
+      .pipe(
+        tap(() => this.getPerformances().subscribe())
+      );
   }
 
-  constructor() { }
 }

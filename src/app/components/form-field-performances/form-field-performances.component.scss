@@ -1,19 +1,9 @@
-:host {
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: wrap;
-  align-items: flex-end;
-  // gap: 1%;
-}
-
 .form-performances {
   padding: 20px 0 0;
 
   &__container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1%;
-    justify-content: stretch;
+    gap: 2%;
   }
 
   &__cast {
@@ -32,9 +22,3 @@
 mat-form-field {
   color: var(--mdc-filled-text-field-label-text-color);
 }
-
-
-// .mdc-text-field--filled.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label,
-// .mdc-text-field--filled.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
-//   color: var(--mdc-filled-text-field-error-label-text-color);
-// }

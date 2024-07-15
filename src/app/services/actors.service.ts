@@ -1,95 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Actor } from '../../types/Actor';
-import { BehaviorSubject, Observable } from 'rxjs';
-
-const actorsFromServer: Actor[] = [
-  {
-    _id: 'actor1',
-    name: 'Romanovich Teofila Fedorovna',
-    rank: 'National',
-    experience: 4,
-    performances: [
-      {
-        performanceId: 'perform2',
-        role: 'Taras',
-        annualContractValue: 51000,
-      },
-      {
-        performanceId: 'perform3',
-        role: 'Angel',
-        annualContractValue: 51000,
-      },
-    ],
-  },
-  {
-    _id: 'actor2',
-    name: 'Zankovetska Maria Kostiantynivna',
-    rank: 'Merited',
-    experience: 2,
-    performances: [
-      {
-        performanceId: 'perform1',
-        role: 'Kozak',
-        annualContractValue: 65000,
-      },
-    ],
-  },
-  {
-    _id: 'actor3',
-    name: 'Kropyvnytskyi Marko Lukych',
-    rank: 'Honorary',
-    experience: 2,
-    performances: [
-      {
-        performanceId: 'perform1',
-        role: 'Fishman',
-        annualContractValue: 48000,
-      },
-      {
-        performanceId: 'perform2',
-        role: 'Ivan',
-        annualContractValue: 37000,
-      },
-      {
-        performanceId: 'perform3',
-        role: 'Singer',
-        annualContractValue: 37000,
-      },
-    ],
-  },
-];
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ActorsService {
-  private actorsFromServer = new BehaviorSubject<Actor[]>(actorsFromServer);
+  private actorsFromServer = new BehaviorSubject<Actor[]>([]);
+  actors$ = this.actorsFromServer.asObservable();
+
+  constructor(private http: HttpClient) {
+    this.loadInitialData();
+  }
+
+  private loadInitialData() {
+    this.getActors().subscribe();
+  }
 
   getActors(): Observable<Actor[]> {
-    return this.actorsFromServer.asObservable();
+    return this.http.get<Actor[]>("http://localhost:3000/api/actors")
+      .pipe(
+        tap(actors => this.actorsFromServer.next(actors))
+      );
   }
 
   addActor(actor: Actor) {
-    const updatedActors = [...this.actorsFromServer.value, actor];
-    this.actorsFromServer.next(updatedActors);
+    return this.http.post<Actor>("http://localhost:3000/api/actors", actor)
+      .pipe(
+        tap(() => this.getActors().subscribe())
+      );
   }
 
   deleteActor(actor: Actor) {
-    const itemsWithoutDeleted =
-      [...this.actorsFromServer.value].filter(item => actor._id !== item._id);
-
-    this.actorsFromServer.next(itemsWithoutDeleted);
+    return this.http.delete<Actor>(`http://localhost:3000/api/actors/${actor._id}`)
+      .pipe(
+        tap(() => this.getActors().subscribe())
+      );
   }
 
   updateActorPerformances(actorId: string, performance: any): void {
-    const actors = this.actorsFromServer.getValue();
-    const actorIndex = actors.findIndex(actor => actor._id === actorId);
 
-    if (actorIndex !== -1) {
-      actors[actorIndex].performances.push(performance);
-      this.actorsFromServer.next(actors);
-    }
   }
 
   addPerformanceToActors(performance: any, cast: any[]): void {
@@ -102,16 +54,4 @@ export class ActorsService {
     });
   }
 
-
-
-  // updateActorsPerformance(performance: Performance) {
-  //   const actorsWithUpdatedPerformance = [...this.actorsFromServer.value];
-  //   console.log(performance);
-
-  //   actorsWithUpdatedPerformance.map(actors => {
-  //     console.log(actors)
-  //   })
-  // }
-
-  constructor() { }
 }

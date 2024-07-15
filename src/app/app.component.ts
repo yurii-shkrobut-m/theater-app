@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
-import { RouterOutlet } from '@angular/router';
-import { ActorsTableComponent } from './components/actors-table/actors-table.component';
-import { FormFieldActorsComponent } from './components/form-field-actors/form-field-actors.component';
-import { FormFieldPerformancesComponent } from './components/form-field-performances/form-field-performances.component';
-import { PerformanceTableComponent } from './components/performance-table/performance-table.component';
+import {Component} from '@angular/core';
+import {MatTabsModule} from '@angular/material/tabs';
+import {RouterOutlet} from '@angular/router';
+import {ActorsTableComponent} from './components/actors-table/actors-table.component';
+import {FormFieldActorsComponent} from './components/form-field-actors/form-field-actors.component';
+import {FormFieldPerformancesComponent} from './components/form-field-performances/form-field-performances.component';
+import {PerformanceTableComponent} from './components/performance-table/performance-table.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ import { PerformanceTableComponent } from './components/performance-table/perfor
     ActorsTableComponent,
     FormFieldActorsComponent,
     PerformanceTableComponent,
-    FormFieldPerformancesComponent
+    FormFieldPerformancesComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

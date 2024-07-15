@@ -24,7 +24,7 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
       <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <app-year-expand [years]="getYears(element.performances)" [details]="getInfo(element.performances)">
+        <app-year-expand [years]="getYears(element.employments)" [details]="getInfo(element.employments)">
         </app-year-expand>
       </div>
     </td>
