@@ -71,7 +71,7 @@ export class ActorsTableComponent implements OnInit {
 
   getInfo(actorPerformances: PerformanceItem[]) {
     const detailsAll: Details = {};
-    //
+
     actorPerformances.forEach(actorPerf => {
       const newDetail: Detail = {
         name: actorPerf.performance.name,

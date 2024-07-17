@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actor } from '../../types/Actor';
+import { Actor, PerformanceItem } from '../../types/Actor';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -29,29 +29,35 @@ export class ActorsService {
   addActor(actor: Actor) {
     return this.http.post<Actor>("http://localhost:3000/api/actors", actor)
       .pipe(
-        tap(() => this.getActors().subscribe())
+        tap(() => this.loadInitialData())
       );
   }
 
   deleteActor(actor: Actor) {
     return this.http.delete<Actor>(`http://localhost:3000/api/actors/${actor._id}`)
       .pipe(
-        tap(() => this.getActors().subscribe())
+        tap(() => this.loadInitialData())
       );
   }
 
-  updateActorPerformances(actorId: string, performance: any): void {
+  addActorEmployment(actorId: string, performance: PerformanceItem): void {
+    const actors = this.actorsFromServer.getValue();
+    const actorIndex = actors.findIndex(actor => actor._id === actorId);
 
+    if (actorIndex !== -1) {
+      actors[actorIndex].employments?.push(performance);
+      this.actorsFromServer.next(actors);
+    }
   }
 
-  addPerformanceToActors(performance: any, cast: any[]): void {
-    cast.forEach(castMember => {
-      this.updateActorPerformances(castMember.actorId, {
-        performanceId: performance._id,
-        role: castMember.role,
-        annualContractValue: castMember.annualContractValue
-      });
-    });
-  }
+  // addPerformanceToActors(performance: any, cast: any[]): void {
+  //   cast.forEach(castMember => {
+  //     this.updateActorPerformances(castMember.actorId, {
+  //       performanceId: performance._id,
+  //       role: castMember.role,
+  //       annualContractValue: castMember.annualContractValue
+  //     });
+  //   });
+  // }
 
 }
