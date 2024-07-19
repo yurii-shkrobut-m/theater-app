@@ -1,0 +1,59 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e8eaf6;  /* Light indigo background */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+  padding: 24px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+button {
+  width: 100%;
+  margin-top: 24px;
+  height: 44px;  /* Slightly taller button */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #303f9f;  /* Darker indigo for the header */
+  font-size: 24px;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.additional-options {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.additional-options a {
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.additional-options a:hover {
+  text-decoration: underline;
+}

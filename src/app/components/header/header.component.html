@@ -1,0 +1,7 @@
+<mat-toolbar>
+  <h1>Theater</h1>
+  <p *ngIf="!!userName">Hello, {{userName}}!</p>
+  <button (click)="logOut()" mat-raised-button class="form-actors__submit-button" type="submit">
+    Log out
+  </button>
+</mat-toolbar>
