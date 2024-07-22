@@ -1,21 +1,3 @@
-<!-- <mat-accordion>
-  <mat-expansion-panel
-    *ngFor="let year of years"
-    (opened)="panelOpenState.set(true)"
-    (closed)="panelOpenState.set(false)"
-  >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{year}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <p *ngFor="let detail of details[year]">
-      {{detail.name}} - {{detail.role}} - {{detail.annualContractValue}}
-    </p>
-  </mat-expansion-panel>
-
-</mat-accordion> -->
 
 <mat-accordion>
   <mat-expansion-panel
@@ -29,32 +11,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <table class="details-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Annual Contract Value</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let detail of details[year]">
-          <td>{{detail.name}}</td>
-          <td>{{detail.role}}</td>
-          <td>{{detail.annualContractValue}}</td>
-        </tr>
-      </tbody>
-
-      <tfoot>
-        <tr>
-          <th>Total salary with bonus +3%</th>
-          <th></th>
-          <th>Cost</th>
-        </tr>
-      </tfoot>
-    </table>
-
+    <app-actor-details [year]="year" [details]="details"></app-actor-details>
 
   </mat-expansion-panel>
 </mat-accordion>

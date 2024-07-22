@@ -69,8 +69,11 @@ h1 {
   padding: 20px;
 }
 
-
 mat-form-field {
   width: 120px; // Робить поля вводу шириною на весь контейнер
 }
 
+mat-option {
+  margin: 5px;
+  // padding: 10px;
+}

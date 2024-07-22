@@ -1,7 +1,16 @@
 <mat-toolbar>
-  <h1>Theater</h1>
-  <p *ngIf="!!userName">Hello, {{userName}}!</p>
-  <button (click)="logOut()" mat-raised-button class="form-actors__submit-button" type="submit">
-    Log out
-  </button>
+  <div class="container">
+    <p *ngIf="!!userName">Hello, {{userName}}!</p>
+
+    <button
+      (click)="logOut()"
+      mat-raised-button class="form-actors__submit-button"
+      type="submit"
+    >
+      Log out
+    </button>
+  </div>
+
+  <h1 class="title">My Theater App</h1>
+
 </mat-toolbar>

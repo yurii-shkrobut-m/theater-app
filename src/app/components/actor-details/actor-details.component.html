@@ -1,26 +1,25 @@
 <table class="details-table">
   <thead>
     <tr>
-      <th>Name of Actor</th>
+      <th>Name of Performance</th>
       <th>Role</th>
       <th>Annual Contract Value</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr *ngFor="let detail of details">
+    <tr *ngFor="let detail of details[year]">
       <td>{{detail.name}}</td>
       <td>{{detail.role}}</td>
       <td>{{detail.annualContractValue}}</td>
     </tr>
   </tbody>
 
-  <!-- <tfoot>
+  <tfoot>
     <tr>
       <th>Total salary with bonus +3%</th>
       <th></th>
       <th> {{total}} </th>
     </tr>
-  </tfoot> -->
+  </tfoot>
 </table>
-

@@ -64,3 +64,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 .mdc-data-table__header-cell {
   padding: 0 8px;
 }
+
+.mat-mdc-header-row {
+  color: #efefef;
+  background-color: var(--mdc-protected-button-label-text-color);
+}

@@ -2,4 +2,25 @@ mat-toolbar {
   display: flex;
   flex-direction: column;
   height: max-content;
+  align-items: start;
+}
+
+p {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--mdc-filled-text-field-label-text-color);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 36px;
+  align-self: center;
+  margin-bottom: 30px;
 }

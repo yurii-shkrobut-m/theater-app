@@ -13,8 +13,4 @@ import { CastItem, PerformanceDetail } from '../../../types/Performance';
 })
 export class PerformanceDetailsComponent {
   @Input() details!: PerformanceDetail[];
-
-  constructor() {
-    // console.log(this.details)
-  }
 }
