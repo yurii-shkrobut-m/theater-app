@@ -6,6 +6,7 @@ import { Details } from '../../../types/Actor';
 @Component({
   selector: 'app-year-expand',
   templateUrl: 'year-expand.component.html',
+  styleUrls: ['./year-expand.component.scss'],
   standalone: true,
   imports: [MatExpansionModule, NgFor],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PerformancesService } from '../../services/performances.service';
 import { ActorsService } from '../../services/actors.service';
 import { Actor } from '../../../types/Actor';
 import { CastItem, Performance } from '../../../types/Performance';
 import { MatIconModule } from '@angular/material/icon';
-
 
 @Component({
   selector: 'app-form-field-performances',
@@ -38,7 +38,9 @@ export class FormFieldPerformancesComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private performancesService: PerformancesService,
-    private actorsService: ActorsService
+    private actorsService: ActorsService,
+    public dialogRef: MatDialogRef<FormFieldPerformancesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.performanceForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -53,6 +55,10 @@ export class FormFieldPerformancesComponent implements OnInit {
       .subscribe((actors) => {
         this.actors = actors
       })
+  }
+
+  closeForm(): void {
+    this.dialogRef.close();
   }
 
   get cast(): FormArray {

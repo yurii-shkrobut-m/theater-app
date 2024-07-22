@@ -1,42 +1,58 @@
-<form class="form-actors" [formGroup]="actorForm" (ngSubmit)="createActor()">
-  <button (click)="toggleIsForm()" mat-raised-button class="form-actors__submit-button" type="submit">
-    {{isForm ? 'Hide Form' : 'Add Actor'}}
-  </button>
 
-  <button *ngIf="isForm" mat-flat-button class="form-actors__submit-button" [disabled]="actorForm.invalid"
-    type="submit">
-    Add
-  </button>
+<div class="custom-modal">
+  <h1 mat-dialog-title>Add New Actor</h1>
 
-  <div *ngIf="isForm" class="form-actors__container">
-    <mat-form-field>
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName">
-    </mat-form-field>
+  <div mat-dialog-content class="actors-form-field">
+    <form class="form-actors" [formGroup]="actorForm" (ngSubmit)="createActor()">
+      <button
+        mat-flat-button
+        class="form-actors__button"
+        [disabled]="actorForm.invalid"
+        type="submit"
+      >
+        Add
+      </button>
 
-    <mat-form-field>
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName">
+      <button
+        class="form-actors__button"
+        mat-raised-button
+        type="button"
+        (click)="closeForm()"
+      >
+        Close
+      </button>
 
-    </mat-form-field>
+      <div class="form-actors__container">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName">
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Middle Name</mat-label>
-      <input matInput formControlName="middleName">
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName">
 
-    <mat-form-field>
-      <mat-label>Rank</mat-label>
-      <mat-select formControlName="rank">
-        <mat-option value="Honorary">Honorary</mat-option>
-        <mat-option value="Merited">Merited</mat-option>
-        <mat-option value="National">National</mat-option>
-      </mat-select>
-    </mat-form-field>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Experience</mat-label>
-      <input matInput formControlName="experience" type="number">
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Middle Name</mat-label>
+          <input matInput formControlName="middleName">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Rank</mat-label>
+          <mat-select formControlName="rank">
+            <mat-option value="Honorary">Honorary</mat-option>
+            <mat-option value="Merited">Merited</mat-option>
+            <mat-option value="National">National</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Experience</mat-label>
+          <input matInput formControlName="experience" type="number">
+        </mat-form-field>
+      </div>
+    </form>
   </div>
-</form>
+</div>

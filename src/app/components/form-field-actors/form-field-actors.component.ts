@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Output } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,8 +6,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Actor } from '../../../types/Actor';
 import { ActorsService } from '../../services/actors.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgIf } from '@angular/common';
-
 
 @Component({
   selector: 'app-form-field-actors',
@@ -42,8 +42,14 @@ export class FormFieldActorsComponent {
   });
 
   constructor(
-    private actorsService: ActorsService
+    private actorsService: ActorsService,
+    public dialogRef: MatDialogRef<FormFieldActorsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
+
+  closeForm(): void {
+    this.dialogRef.close();
+  }
 
   createActor() {
     if (this.actorForm.invalid) {

@@ -1,53 +1,77 @@
-<form class="form-performances" [formGroup]="performanceForm" (ngSubmit)="createPerformance()">
-  <div>
-    <button class="form-performances__submit-button" mat-raised-button type="button" (click)="addActor()">Add
-      Actor</button>
-    <button class="form-performances__submit-button" mat-raised-button type="submit"
-      [disabled]="performanceForm.invalid || !performanceForm.value.cast.length">Add
-      Performance</button>
+<div class="custom-modal">
+  <h1 mat-dialog-title>Add New Performance</h1>
+
+  <div mat-dialog-content class="performance-form-field">
+    <form class="form-performances" [formGroup]="performanceForm" (ngSubmit)="createPerformance()">
+      <div>
+        <button
+          class="form-performances__button"
+          mat-flat-button type="submit"
+          [disabled]="performanceForm.invalid || !performanceForm.value.cast.length"
+        >
+          Add Performance
+        </button>
+
+        <button
+          class="form-performances__button"
+          mat-raised-button type="button"
+          (click)="addActor()"
+        >
+          Add Actor
+        </button>
+
+        <button
+          class="form-performances__button"
+          mat-raised-button
+          type="button"
+          (click)="closeForm()"
+        >
+          Close
+        </button>
+      </div>
+
+      <div class="form-performances__container">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Year</mat-label>
+          <input matInput formControlName="year" type="number">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Budget</mat-label>
+          <input matInput formControlName="budget" type="number">
+        </mat-form-field>
+      </div>
+
+      <div formArrayName="cast">
+        <div style="display: flex; gap: 2%;" *ngFor="let actorGroup of cast.controls; let i = index"
+          [formGroupName]="i">
+          <mat-form-field>
+            <mat-label>Actor</mat-label>
+            <mat-select formControlName="actor">
+              <mat-option *ngFor="let actor of actors" [value]="actor._id">{{ actor.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Role</mat-label>
+            <input matInput formControlName="role">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Contract</mat-label>
+            <input matInput formControlName="annualContractValue" type="number">
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removeActor(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-
-  <div class="form-performances__container">
-    <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Year</mat-label>
-      <input matInput formControlName="year" type="number">
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Budget</mat-label>
-      <input matInput formControlName="budget" type="number">
-    </mat-form-field>
-  </div>
-
-  <div formArrayName="cast">
-    <div style="display: flex; gap: 2%;" *ngFor="let actorGroup of cast.controls; let i = index" [formGroupName]="i">
-      <mat-form-field>
-        <mat-label>Actor</mat-label>
-        <mat-select formControlName="actor">
-          <mat-option *ngFor="let actor of actors" [value]="actor._id">{{ actor.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Role</mat-label>
-        <input matInput formControlName="role">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Annual Contract Value</mat-label>
-        <input matInput formControlName="annualContractValue" type="number">
-      </mat-form-field>
-
-      <button mat-icon-button color="warn" (click)="removeActor(i)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </div>
-
-
-</form>
+</div>

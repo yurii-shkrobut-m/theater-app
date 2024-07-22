@@ -5,10 +5,10 @@ import { ActorsTableComponent } from '../actors-table/actors-table.component'
 import { FormFieldPerformancesComponent } from '../form-field-performances/form-field-performances.component'
 import { PerformanceTableComponent } from '../performance-table/performance-table.component'
 import { MatButton } from '@angular/material/button'
-import { Router } from '@angular/router'
 import { NgIf } from '@angular/common'
 import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar'
 import { HeaderComponent } from '../header/header.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tabs',
@@ -30,5 +30,24 @@ import { HeaderComponent } from '../header/header.component';
   styleUrl: './tabs.component.scss'
 })
 export class TabsComponent {
+  constructor(public dialog: MatDialog) { }
 
+  openActorDialog(): void {
+    const dialogRef = this.dialog.open(FormFieldActorsComponent, {
+      maxWidth: "420px"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  openPerformanceDialog(): void {
+    const dialogRef = this.dialog.open(FormFieldPerformancesComponent, {
+      maxWidth: "1000px"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 }

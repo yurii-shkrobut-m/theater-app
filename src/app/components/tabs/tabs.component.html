@@ -2,8 +2,9 @@
   <app-header></app-header>
 
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-    <mat-tab label="Actors">
-      <app-form-field-actors></app-form-field-actors>
+    <mat-tab class="tab" label="Actors">
+      <!-- <app-form-field-actors></app-form-field-actors> -->
+      <button mat-raised-button (click)="openActorDialog()">Add New Actor</button>
 
       <h2>Actors list</h2>
 
@@ -11,7 +12,7 @@
     </mat-tab>
 
     <mat-tab label="Performances">
-      <app-form-field-performances></app-form-field-performances>
+      <button mat-raised-button (click)="openPerformanceDialog()">Add New Performance</button>
 
       <h2>Performances list</h2>
 
