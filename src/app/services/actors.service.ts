@@ -49,15 +49,4 @@ export class ActorsService {
       this.actorsFromServer.next(actors);
     }
   }
-
-  // addPerformanceToActors(performance: any, cast: any[]): void {
-  //   cast.forEach(castMember => {
-  //     this.updateActorPerformances(castMember.actorId, {
-  //       performanceId: performance._id,
-  //       role: castMember.role,
-  //       annualContractValue: castMember.annualContractValue
-  //     });
-  //   });
-  // }
-
 }

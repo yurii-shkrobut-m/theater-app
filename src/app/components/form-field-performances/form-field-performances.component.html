@@ -1,5 +1,5 @@
 <div class="custom-modal">
-  <h1 mat-dialog-title>Add New Performance</h1>
+  <h3 mat-dialog-title>New Performance</h3>
 
   <div mat-dialog-content class="performance-form-field">
     <form class="form-performances" [formGroup]="performanceForm" (ngSubmit)="createPerformance()">
@@ -38,7 +38,7 @@
 
         <mat-form-field>
           <mat-label>Year</mat-label>
-          <input matInput formControlName="year" type="number">
+          <input matInput formControlName="year" type="number" min="1900" max="2099" step="1">
         </mat-form-field>
 
         <mat-form-field>
@@ -57,7 +57,7 @@
                 *ngFor="let actor of actors"
                 [value]="actor._id"
               >
-                {{ actor.name.slice((actor.name.indexOf(' ')) + 1, actor.name.lastIndexOf(' ')) }}
+                {{ actorWithInitials(actor) }}
             </mat-option>
 
             </mat-select>

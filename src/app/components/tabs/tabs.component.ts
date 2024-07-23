@@ -34,7 +34,7 @@ export class TabsComponent {
 
   openActorDialog(): void {
     const dialogRef = this.dialog.open(FormFieldActorsComponent, {
-      maxWidth: "420px"
+      maxWidth: "515px"
     });
 
     dialogRef.afterClosed().subscribe(result => {

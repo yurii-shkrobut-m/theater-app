@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   animate,
   state,
@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Actor, PerformanceItem } from '../../../types/Actor';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
 import { CastItem, Performance, PerformanceDetail } from '../../../types/Performance';
@@ -16,6 +16,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { ActorsService } from '../../services/actors.service';
 import { PerformancesService } from '../../services/performances.service';
 import { PerformanceDetailsComponent } from '../performance-details/performance-details.component';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-performance-table',
@@ -33,6 +34,7 @@ import { PerformanceDetailsComponent } from '../performance-details/performance-
   ],
   standalone: true,
   imports: [
+    MatSortModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -43,33 +45,35 @@ import { PerformanceDetailsComponent } from '../performance-details/performance-
   ],
 })
 export class PerformanceTableComponent implements OnInit {
-  dataSource: Performance[] = [];
+  dataSource: MatTableDataSource<Performance>;
   actors: Actor[] = [];
   columnsToDisplay = ['name', 'budget', 'year'];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand',];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Actor | null = null;
   expandedYear: number | undefined;
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private actorsService: ActorsService,
     private performancesService: PerformancesService
-  ) { }
+  ) {
+    this.dataSource = new MatTableDataSource<Performance>([]);
+  }
 
   ngOnInit() {
-    this.actorsService.actors$
-      .subscribe((actors) => {
-        this.actors = actors
-      })
+    this.actorsService.actors$.subscribe((actors) => {
+      this.actors = actors;
+    });
 
-    this.performancesService.performances$
-      .subscribe((performancesFromServer) => {
-        this.dataSource = performancesFromServer
-      })
+    this.performancesService.performances$.subscribe((performancesFromServer) => {
+      this.dataSource.data = performancesFromServer;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   removePerformance(performance: Performance) {
-    this.performancesService.deletePerformance(performance)
-      .subscribe()
+    this.performancesService.deletePerformance(performance).subscribe();
   }
 
   getInfo(performanceCast: CastItem[]) {
@@ -88,3 +92,4 @@ export class PerformanceTableComponent implements OnInit {
     return detailsAll;
   }
 }
+

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   animate,
   state,
@@ -8,7 +10,6 @@ import {
 } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
 import { Actor, Detail, Details, PerformanceItem } from '../../../types/Actor';
 import { YearExpandComponent } from '../year-expand/year-expand.component';
 import { NgFor, NgIf } from '@angular/common';
@@ -30,6 +31,8 @@ import { ActorsService } from '../../services/actors.service';
   ],
   standalone: true,
   imports: [
+    MatSort,
+    MatSortModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -39,24 +42,28 @@ import { ActorsService } from '../../services/actors.service';
   ],
 })
 export class ActorsTableComponent implements OnInit {
-  dataSource: Actor[] = [];
+  dataSource: MatTableDataSource<Actor> = new MatTableDataSource();
   columnsToDisplay = ['name', 'rank', 'experience'];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand',];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Actor | null = null;
 
-  constructor(
-    private actorsService: ActorsService,
-  ) { }
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(private actorsService: ActorsService) {}
 
   ngOnInit() {
     this.actorsService.actors$.subscribe((actors) => {
-      this.dataSource = actors;
+      this.dataSource.data = actors;
+      this.dataSource.sort = this.sort;
     });
   }
 
   removeActor(actor: Actor) {
-    this.actorsService.deleteActor(actor)
-      .subscribe();
+    this.actorsService.deleteActor(actor).subscribe();
+
+    this.actorsService.actors$.subscribe((actors) => {
+      this.dataSource.data = actors;
+    });
   }
 
   getYears(actorPerformances: PerformanceItem[]) {
@@ -64,7 +71,7 @@ export class ActorsTableComponent implements OnInit {
 
     actorPerformances.forEach(actorPerf => {
       years.add(actorPerf.performance.year)
-    })
+    });
 
     return [...years];
   }

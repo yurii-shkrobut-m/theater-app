@@ -3,6 +3,8 @@ mat-toolbar {
   flex-direction: column;
   height: max-content;
   align-items: start;
+  gap: 50px;
+  background-color: inherit;
 }
 
 p {

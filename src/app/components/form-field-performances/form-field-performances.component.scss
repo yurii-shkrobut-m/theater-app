@@ -24,56 +24,42 @@ mat-form-field {
   color: var(--mdc-filled-text-field-label-text-color);
 }
 
-// src/app/components/form-field-performances/form-field-performances.component.scss
-
-// Стиль заголовка
-h1 {
+h3 {
   font-size: 24px;
-  color: #3f51b5; // Колір заголовка
+  color: #3f51b5;
   margin-bottom: 20px;
-  text-align: center; // Вирівнювання по центру
+  text-align: center;
 }
 
-// Стиль вмісту
 .mat-dialog-content {
   display: flex;
   flex-direction: column;
-  gap: 15px; // Проміжок між елементами форми
-  padding: 20px; // Внутрішній відступ
+  gap: 15px;
+  padding: 20px;
 }
 
-// Стиль кнопок
-.mat-dialog-actions {
-  display: flex;
-  justify-content: space-between; // Розподілення кнопок по краях
-  margin-top: 20px;
-  padding: 0 20px; // Внутрішній відступ
-
-  button {
-    margin-left: 10px;
-  }
-}
-
-// Додаткові стилі для форми
 .performance-form-field {
   display: flex;
   flex-direction: column;
-  gap: 10px; // Проміжок між полями вводу
+  gap: 10px;
 }
 
-// Загальний стиль для модального вікна
+
 .custom-modal {
-  background: #fff; // Білий фон
-  border-radius: 10px; // Закруглені кути
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); // Тінь
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   padding: 20px;
 }
 
 mat-form-field {
-  width: 120px; // Робить поля вводу шириною на весь контейнер
+  width: 150px;
 }
 
 mat-option {
-  margin: 5px;
-  // padding: 10px;
+  font-size: 14px;
+  color: var(--mdc-filled-text-field-label-text-color);
+  font-weight: 500;
+  margin: 5px 0;
+  padding: 0 0 0 8px;
 }

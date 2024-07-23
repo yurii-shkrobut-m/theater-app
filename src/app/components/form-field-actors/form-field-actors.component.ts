@@ -27,12 +27,6 @@ import { NgIf } from '@angular/common';
 })
 
 export class FormFieldActorsComponent {
-  isForm = false;
-
-  toggleIsForm() {
-    this.isForm = !this.isForm;
-  }
-
   actorForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -60,12 +54,12 @@ export class FormFieldActorsComponent {
       name: `${this.actorForm.value.firstName} ${this.actorForm.value.lastName} ${this.actorForm.value.middleName}`,
       rank: this.actorForm.value.rank as Actor["rank"],
       experience: +this.actorForm.value.experience!,
-      // performances: [],
     };
 
     this.actorsService.addActor(newActor)
       .subscribe()
 
     this.actorForm.reset();
+    this.closeForm();
   }
 }

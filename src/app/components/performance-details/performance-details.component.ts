@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { Details } from '../../../types/Actor';
-import { CastItem, PerformanceDetail } from '../../../types/Performance';
+import { PerformanceDetail } from '../../../types/Performance';
 
 @Component({
   selector: 'app-performance-details',

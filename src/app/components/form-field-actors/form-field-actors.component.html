@@ -1,6 +1,5 @@
-
 <div class="custom-modal">
-  <h1 mat-dialog-title>Add New Actor</h1>
+  <h3 mat-dialog-title>New Actor</h3>
 
   <div mat-dialog-content class="actors-form-field">
     <form class="form-actors" [formGroup]="actorForm" (ngSubmit)="createActor()">
@@ -10,7 +9,7 @@
         [disabled]="actorForm.invalid"
         type="submit"
       >
-        Add
+        Add Actor
       </button>
 
       <button
