@@ -64,6 +64,8 @@ export class FormFieldPerformancesComponent implements OnInit {
   actorWithInitials(actor: Actor): string {
     const result = actor.name.split(' ')
 
+    console.log(result)
+
     return (`${result[1]} ${result[0][0]}. ${result[2][0]}.`).toUpperCase()
   }
 

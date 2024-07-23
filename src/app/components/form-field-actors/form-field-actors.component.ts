@@ -51,7 +51,7 @@ export class FormFieldActorsComponent {
     }
 
     const newActor: Actor = {
-      name: `${this.actorForm.value.firstName} ${this.actorForm.value.lastName} ${this.actorForm.value.middleName}`,
+      name: `${this.actorForm.value.firstName?.trim()} ${this.actorForm.value.lastName?.trim()} ${this.actorForm.value.middleName?.trim()}`,
       rank: this.actorForm.value.rank as Actor["rank"],
       experience: +this.actorForm.value.experience!,
     };
