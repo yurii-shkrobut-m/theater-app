@@ -23,26 +23,20 @@ To get started with the project, follow these steps:
 
 1. **Clone the repository**:
 
-   \`\`\`bash
-   git clone https://github.com/yurii-shkrobut-m/theater-app.git
-   cd theater-app
-   \`\`\`
+   `git clone https://github.com/yurii-shkrobut-m/theater-app.git`
+   `cd theater-app`
 
 2. **Install dependencies**:
 
    Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed. Then, run the following command to install the project's dependencies:
 
-   \`\`\`bash
-   npm install
-   \`\`\`
+   `npm install`
 
 3. **Run the development server**:
 
    Start the development server with:
 
-   \`\`\`bash
-   npm start
-   \`\`\`
+   `npm start`
 
    The application should now be running at `http://localhost:4200/`.
 
